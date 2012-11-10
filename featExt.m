@@ -5,7 +5,7 @@ close all;
 ELEVATED=[];
 %[fname path]=uigetfile('*.mat');
 %fname=strcat(path,fname);
-rnum = '114';
+rnum = '100';
         load(strcat(rnum,'m.mat'));
        z=zeros(100,1);
        
