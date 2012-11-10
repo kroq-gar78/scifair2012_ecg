@@ -5,11 +5,11 @@ close all;
 ELEVATED=[];
 %[fname path]=uigetfile('*.mat');
 %fname=strcat(path,fname);
-rnum = '100';
+rnum = '114';
         load(strcat(rnum,'m.mat'));
        z=zeros(100,1);
        
-       A=val(1,1:);
+       A=val(1,:);
        v1=val(1,:)-val(1,1);
        A=v1;
        A=A';
@@ -301,11 +301,17 @@ for i=1:1:length(Rloc)
     fprintf(fopen(strcat(rnum,'_r.txt'),'w'),'%d,%d\n',[Rloc(i);Ramp(i)]);
 end
 %}
+
+% manipulate variables such that matlab doesn't mess them up
+% while writing to CSV files (loss of precision after ~100,000)
+
+
 %fprintf(fopen(strcat(rnum,'_r.txt'),'w'),'%d,%d\n',[Rloc';Ramp]);
-%csvwrite(strcat(rnum,'_p.txt'),[Ploc',Pamp']);
-%csvwrite(strcat(rnum,'_q.txt'),[Qloc',Qamp']);
-%csvwrite(strcat(rnum,'_s.txt'),[Sloc',Samp']);
-%csvwrite(strcat(rnum,'_t.txt'),[Tloc',Tamp']);
+csvwrite(strcat(rnum,'_r.csv'),[Rloc',Ramp]);
+csvwrite(strcat(rnum,'_p.csv'),[Ploc',Pamp']);
+csvwrite(strcat(rnum,'_q.csv'),[Qloc',Qamp']);
+csvwrite(strcat(rnum,'_s.csv'),[Sloc',Samp']);
+csvwrite(strcat(rnum,'_t.csv'),[Tloc',Tamp']);
 
 %clc;
 flag=0;
