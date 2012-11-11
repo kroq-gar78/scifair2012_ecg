@@ -1,1 +1,5 @@
-for i in `find . -type d -not -path './.git*' -not -path './ECG_FEATURE_WAVELET_ST*' -not -name 'timestr' -not -name '.'|xargs`; do for j in p q r s t; do mv "${i:2}_$j.csv" $i; done; done
+for i in `find . -maxdepth 1 -type f -name '*.csv'|sed 's/\.\///g' |sort|xargs`; do
+	directory=`echo $i|sed 's/_[a-z]\.csv//g'`
+	if [ ! -e $directory ]; then mkdir $directory; fi
+	mv $i $directory
+done
