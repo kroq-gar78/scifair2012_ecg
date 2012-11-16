@@ -307,11 +307,25 @@ end
 
 
 %fprintf(fopen(strcat(rnum,'_r.txt'),'w'),'%d,%d\n',[Rloc';Ramp]);
-csvwrite(strcat(rnum,'_r.csv'),[Rloc',Ramp]);
-csvwrite(strcat(rnum,'_p.csv'),[Ploc',Pamp']);
-csvwrite(strcat(rnum,'_q.csv'),[Qloc',Qamp']);
-csvwrite(strcat(rnum,'_s.csv'),[Sloc',Samp']);
-csvwrite(strcat(rnum,'_t.csv'),[Tloc',Tamp']);
+%csvwrite(strcat(rnum,'_r.csv'),[Rloc',Ramp]);
+%csvwrite(strcat(rnum,'_p.csv'),[Ploc',Pamp']);
+%csvwrite(strcat(rnum,'_q.csv'),[Qloc',Qamp']);
+%csvwrite(strcat(rnum,'_s.csv'),[Sloc',Samp']);
+%csvwrite(strcat(rnum,'_t.csv'),[Tloc',Tamp']);
+Rloc=Rloc';
+Ploc=Ploc';
+Pamp=Pamp';
+Qloc=Qloc';
+Qamp=Qamp';
+Sloc=Sloc';
+Samp=Samp';
+Tloc=Tloc';
+Tamp=Tamp';
+save(strcat(rnum,'_r.mat'),'Rloc','Ramp');
+save(strcat(rnum,'_p.mat'),'Ploc','Pamp');
+save(strcat(rnum,'_q.mat'),'Qloc','Qamp');
+save(strcat(rnum,'_s.mat'),'Sloc','Samp');
+save(strcat(rnum,'_t.mat'),'Tloc','Tamp');
 
 %clc;
 flag=0;
