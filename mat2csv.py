@@ -9,8 +9,12 @@ import scipy.io
 
 rnum = 100
 
-# read the .mat file
-mat = scipy.io.loadmat(str(rnum)+'_r.mat')
+# read the .mat files
+matr = scipy.io.loadmat(str(rnum)+'_r.mat')
+matp = scipy.io.loadmat(str(rnum)+'_p.mat')
+matq = scipy.io.loadmat(str(rnum)+'_q.mat')
+mats = scipy.io.loadmat(str(rnum)+'_s.mat')
+matt = scipy.io.loadmat(str(rnum)+'_t.mat')
 
 #for i in mat['Rloc']:
 #	vals[0].append(int(i))
@@ -31,15 +35,19 @@ qwriter = csv.writer(qfile, dialect="excel")
 swriter = csv.writer(sfile, dialect="excel")
 twriter = csv.writer(tfile, dialect="excel")
 
-for i in xrange(len(mat['Rloc'])):
-	rwriter.writerow([int(mat['Rloc'][i]),int(mat['Ramp'][i])])
-for i in xrange(len(mat['Ploc'])):
-	pwriter.writerow([int(mat['Ploc'][i]),int(mat['Pamp'][i])])
-for i in xrange(len(mat['Qloc'])):
-	qwriter.writerow([int(mat['Qloc'][i]),int(mat['Qamp'][i])])
-for i in xrange(len(mat['Sloc'])):
-	swriter.writerow([int(mat['Sloc'][i]),int(mat['Samp'][i])])
+for i in xrange(len(matr['Rloc'])):
+	rwriter.writerow([int(matr['Rloc'][i]),int(matr['Ramp'][i])])
+for i in xrange(len(matp['Ploc'])):
+	pwriter.writerow([int(matp['Ploc'][i]),int(matp['Pamp'][i])])
+for i in xrange(len(matq['Qloc'])):
+	qwriter.writerow([int(matq['Qloc'][i]),int(matq['Qamp'][i])])
+for i in xrange(len(mats['Sloc'])):
+	swriter.writerow([int(mats['Sloc'][i]),int(mats['Samp'][i])])
 for i in xrange(len(mat['Tloc'])):
-	rwriter.writerow([int(mat['Tloc'][i]),int(mat['Tamp'][i])])
+	rwriter.writerow([int(matt['Tloc'][i]),int(matt['Tamp'][i])])
 
 rfile.close()
+pfile.close()
+qfile.close()
+sfile.close()
+tfile.close()
