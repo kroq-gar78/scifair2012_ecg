@@ -42,7 +42,7 @@ for i in xrange(len(matq['Qloc'])):
 for i in xrange(len(mats['Sloc'])):
 	swriter.writerow([int(mats['Sloc'][i]),int(mats['Samp'][i])])
 for i in xrange(len(matt['Tloc'])):
-	rwriter.writerow([int(matt['Tloc'][i]),int(matt['Tamp'][i])])
+	twriter.writerow([int(matt['Tloc'][i]),int(matt['Tamp'][i])])
 
 rfile.close()
 pfile.close()
