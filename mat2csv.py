@@ -4,10 +4,11 @@
 
 import csv
 import scipy.io
+import sys
 
 # test conversion with 1 ECG file first
 
-rnum = 100
+rnum = int(sys.argv[1])
 
 # read the .mat files
 matr = scipy.io.loadmat(str(rnum)+'_r.mat')
