@@ -21,8 +21,6 @@ matt = scipy.io.loadmat(str(rnum)+'_t.mat')
 #for i in mat['Ramp']:
 #	vals[1].append(int(i))
 
-print vals
-
 # write the data into a .csv file
 rfile = open((str(rnum)+"_r.csv"),'wb')
 pfile = open((str(rnum)+"_p.csv"),'wb')
@@ -43,7 +41,7 @@ for i in xrange(len(matq['Qloc'])):
 	qwriter.writerow([int(matq['Qloc'][i]),int(matq['Qamp'][i])])
 for i in xrange(len(mats['Sloc'])):
 	swriter.writerow([int(mats['Sloc'][i]),int(mats['Samp'][i])])
-for i in xrange(len(mat['Tloc'])):
+for i in xrange(len(matt['Tloc'])):
 	rwriter.writerow([int(matt['Tloc'][i]),int(matt['Tamp'][i])])
 
 rfile.close()
