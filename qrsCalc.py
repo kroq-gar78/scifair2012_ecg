@@ -6,7 +6,7 @@ import csv
 # PR (probably PQ; P to (R or Q))
 # QRS (Q to S)
 # QT (Q to T)
-# ST (S to T)
+# ST (S to T) - will require more work b/c uses diff endpoints from QT
 
 rnum = 100
 
@@ -83,8 +83,31 @@ for row in tfile:
 
 #qfile.close()
 
-print ploc
+# check if there are an identical nubmer of each peak
+if( not (len(ploc) == len(qloc)) and (len(qloc) == len(rloc)) and (len(rloc) == len(sloc)) and (len(sloc) == len(tloc))):
+	print "ERROR: peak lists are not of the same size"
+	exit(1)
+
+# calculate QRS
+qrslen = []
+for i in xrange(len(qloc)):
+	qrslen.append(sloc[i]-qloc[i])
+print qrslen
+
+# calculate QT
+qtlen = []
+for i in xrange(len(qloc)):
+	qtlen.append(tloc[i]-qloc[i])
+print qtlen
+
+# calculate ST
+stlen = []
+for i in xrange(len(qloc)):
+	stlen.append(tloc[i]-sloc[i])
+print stlen
+
+'''print ploc
 print qloc
 print rloc
 print sloc
-print tloc
+print tloc'''
