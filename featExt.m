@@ -28,10 +28,10 @@ figure(1)
         %}
 
   [c,l]=wavedec(s,4,'db4');
-  ca1=appcoef(c,l,'db4',1);
+  %ca1=appcoef(c,l,'db4',1);
   ca2=appcoef(c,l,'db4',2);
-  ca3=appcoef(c,l,'db4',3);
-  ca4=appcoef(c,l,'db4',4);
+  %ca3=appcoef(c,l,'db4',3);
+  %ca4=appcoef(c,l,'db4',4);
   
   %{
 figure(2)
@@ -101,7 +101,7 @@ title('Detected R peak in actual Signal')
 X=Rloc;
 y1=A;
 %for(i=1:1:1)
-i=1
+i=1;
 
 for(j=1:1:length(X))
     a=X(j)-100:X(j)-50;
