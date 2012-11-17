@@ -10,13 +10,6 @@ import csv
 
 rnum = 100
 
-# use "with open('filename') as f:" later on instead of this
-pfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_p.csv",'rb'))
-qfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_q.csv",'rb'))
-rfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_r.csv",'rb'))
-sfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_s.csv",'rb'))
-tfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_t.csv",'rb'))
-
 # this stuff is heart rate...
 '''diffs = []
 rownum = 0
@@ -46,40 +39,50 @@ rloc = []
 sloc = []
 tloc = []
 
-for row in pfile:
-	colnum = 0
-	for col in row:
-		if colnum != 0: continue
-		ploc.append(int(col))
-		colnum += 1
+with open(str(rnum)+"/"+str(rnum)+"_p.csv",'rb') as f:
+	pfile = csv.reader(f)
+	for row in pfile:
+		colnum = 0
+		for col in row:
+			if colnum != 0: continue
+			ploc.append(int(col))
+			colnum += 1
 
-for row in qfile:
-	colnum = 0
-	for col in row:
-		if colnum != 0: continue
-		qloc.append(int(col))
-		colnum += 1
-		
-for row in rfile:
-	colnum = 0
-	for col in row:
-		if colnum != 0: continue
-		tloc.append(int(col))
-		colnum += 1
+with open(str(rnum)+"/"+str(rnum)+"_q.csv",'rb') as f:
+	qfile = csv.reader(f)
+	for row in qfile:
+		colnum = 0
+		for col in row:
+			if colnum != 0: continue
+			qloc.append(int(col))
+			colnum += 1
 
-for row in sfile:
-	colnum = 0
-	for col in row:
-		if colnum != 0: continue
-		sloc.append(int(col))
-		colnum += 1
-		
-for row in tfile:
-	colnum = 0
-	for col in row:
-		if colnum != 0: continue
-		tloc.append(int(col))
-		colnum += 1
+with open(str(rnum)+"/"+str(rnum)+"_r.csv",'rb') as f:
+	rfile = csv.reader(f)
+	for row in rfile:
+		colnum = 0
+		for col in row:
+			if colnum != 0: continue
+			tloc.append(int(col))
+			colnum += 1
+
+with open(str(rnum)+"/"+str(rnum)+"_s.csv",'rb') as f:
+	sfile = csv.reader(f)
+	for row in sfile:
+		colnum = 0
+		for col in row:
+			if colnum != 0: continue
+			sloc.append(int(col))
+			colnum += 1
+
+with open(str(rnum)+"/"+str(rnum)+"_t.csv",'rb') as t:
+	tfile = csv.reader(t)
+	for row in tfile:
+		colnum = 0
+		for col in row:
+			if colnum != 0: continue
+			tloc.append(int(col))
+			colnum += 1
 
 #qfile.close()
 
