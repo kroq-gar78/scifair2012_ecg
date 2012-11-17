@@ -99,12 +99,11 @@ plot(Rloc,Ramp,'*');
 title('Detected R peak in actual Signal')
 %}
 %% After R Peak Tracking ... detect others
-% Work from closest to R peak to farthest
-X=Rloc;
+% Work from closest to R peak to farthest from R peak
 y1=A;
 
 
-for(j=1:1:length(X))
+for(j=1:1:length(Rloc))
     a=Rloc(j)-100:Rloc(j)-10;
     m=max(y1(a));
     b=find(y1(a)==m);
