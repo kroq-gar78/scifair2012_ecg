@@ -7,6 +7,7 @@ ELEVATED=[];
 %fname=strcat(path,fname);
 rnum = '100';
         load(strcat(rnum,'m.mat'));
+       val=val(1:800);
        z=zeros(100,1);
        
        A=val(1,:);
@@ -141,7 +142,7 @@ ROF(i,j)=qon1(1);
  %% P Peak
     try
         
-    a=Rloc(i,j)-100:Rloc(i,j)-10;
+    a=Rloc(i,j)-100:Rloc(i,j)-50;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
@@ -285,15 +286,15 @@ end
 %figure;
 %subplot(6,1,k);
     
-%{
+
 plot(y1), hold on;
 plot(Rloc,Ramp,'*'),hold on;
 plot(Qloc,Qamp,'+'),hold on;
 plot(Sloc,Samp,'+'),hold on;
-plot(Ploc,Pamp,'.'), hold on
-plot(Tloc,Tamp,'^')
+plot(Ploc,Pamp,'^'), hold on
+plot(Tloc,Tamp,'.')
 grid on;
-%}
+
 
 % Write points to files
 %{
@@ -321,12 +322,13 @@ Sloc=Sloc';
 Samp=Samp';
 Tloc=Tloc';
 Tamp=Tamp';
+%{
 save(strcat(rnum,'_r.mat'),'Rloc','Ramp');
 save(strcat(rnum,'_p.mat'),'Ploc','Pamp');
 save(strcat(rnum,'_q.mat'),'Qloc','Qamp');
 save(strcat(rnum,'_s.mat'),'Sloc','Samp');
 save(strcat(rnum,'_t.mat'),'Tloc','Tamp');
-
+%}
 %clc;
 flag=0;
 if(length(ELEVATED)>ceil(.8*length(Rloc)))
