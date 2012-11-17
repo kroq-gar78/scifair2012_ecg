@@ -112,7 +112,6 @@ for(j=1:1:length(Rloc))
     %%% ONSET
     fnd=0;
 
-%% Q detection
 for k=b-20:+1:b
     if((y1(k)<=0) && (y1(k-1)>0))
         qon1=k;
@@ -140,19 +139,6 @@ qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
 ROF(j)=qon1(1);
- %% P Peak
-    try
-        
-    a=Rloc(j)-100:Rloc(j)-50;
-    m=max(y1(a));
-    b=find(y1(a)==m);
-    b=b(1);
-    b=a(b);
-    Ploc(j)=b;
-    Pamp(j)=m;
-        
-    end
-
     %% Q  Detection
     a=Rloc(j)-50:Rloc(j)-10;
     m=min(y1(a));
@@ -191,6 +177,19 @@ qon1=Qrange(qon1);
 end
 QOF(j)=qon1(1);
     
+ %% P Peak
+    try
+        
+    a=Rloc(j)-100:Rloc(j)-50;
+    m=max(y1(a));
+    b=find(y1(a)==m);
+    b=b(1);
+    b=a(b);
+    Ploc(j)=b;
+    Pamp(j)=m;
+        
+    end
+
     %% S  Detection
     a=Rloc(j)+5:Rloc(j)+50;
     m=min(y1(a));
