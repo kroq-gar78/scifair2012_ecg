@@ -100,8 +100,8 @@ title('Detected R peak in actual Signal')
 %% After R Peak Tracking ... detect others
 X=Rloc;
 y1=A;
-for(i=1:1:1)
-
+%for(i=1:1:1)
+i=1
 
 for(j=1:1:length(X))
     a=X(j)-100:X(j)-50;
@@ -281,7 +281,7 @@ TOFF(j,i)=qon1(1);
     end
     %% END OF T
 end
-end
+%end
 %figure;
 %subplot(6,1,k);
     
