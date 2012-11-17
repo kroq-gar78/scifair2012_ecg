@@ -7,7 +7,7 @@ ELEVATED=[];
 %fname=strcat(path,fname);
 rnum = '100';
         load(strcat(rnum,'m.mat'));
-       val=val(1:800);
+       val=val(1:1000);
        z=zeros(100,1);
        
        A=val(1,:);
@@ -61,7 +61,7 @@ figure(4)
   title('base line corrected and smoothed signal')
   %}
   
-  %% DETECT R_PEAK
+  %% DETECT R PEAK
 y1=y;
 m1=max(y1)*.40;
 P=find(y1>=m1);
@@ -99,19 +99,21 @@ plot(Rloc,Ramp,'*');
 title('Detected R peak in actual Signal')
 %}
 %% After R Peak Tracking ... detect others
+% Work from closest to R peak to farthest
 X=Rloc;
 y1=A;
-%for(i=1:1:1)
-i=1;
+
 
 for(j=1:1:length(X))
-    a=X(j)-100:X(j)-50;
+    a=Rloc(j)-100:Rloc(j)-10;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
     %%% ONSET
     fnd=0;
+
+%% Q detection
 for k=b-20:+1:b
     if((y1(k)<=0) && (y1(k-1)>0))
         qon1=k;
@@ -124,7 +126,7 @@ Qrange=b-20:+1:b;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-RON(i,j)=qon1(1);
+RON(j)=qon1(1);
 fnd;
 for k=b:+1:b+20
     if((y1(k)<=0) && (y1(k-1)>0))
@@ -138,28 +140,28 @@ Qrange=b:+1:b+20;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-ROF(i,j)=qon1(1);
+ROF(j)=qon1(1);
  %% P Peak
     try
         
-    a=Rloc(i,j)-100:Rloc(i,j)-50;
+    a=Rloc(j)-100:Rloc(j)-50;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
-    Ploc(i,j)=b;
-    Pamp(i,j)=m;
+    Ploc(j)=b;
+    Pamp(j)=m;
         
     end
 
     %% Q  Detection
-    a=Rloc(i,j)-50:Rloc(i,j)-10;
+    a=Rloc(j)-50:Rloc(j)-10;
     m=min(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
-    Qloc(i,j)=b;
-    Qamp(i,j)=m;
+    Qloc(j)=b;
+    Qamp(j)=m;
     %%%%% ONSET
     fnd=0;
 for k=b-20:+1:b
@@ -174,7 +176,7 @@ Qrange=b-20:+1:b;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-QON(i,j)=qon1(1);
+QON(j)=qon1(1);
 fnd;
 for k=b:+1:b+20
     if((y1(k)<=0) && (y1(k-1)>0))
@@ -188,16 +190,16 @@ Qrange=b:+1:b+20;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-QOF(i,j)=qon1(1);
+QOF(j)=qon1(1);
     
     %% S  Detection
-    a=Rloc(i,j)+5:Rloc(i,j)+50;
+    a=Rloc(j)+5:Rloc(j)+50;
     m=min(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
-    Sloc(i,j)=b;
-    Samp(i,j)=m;
+    Sloc(j)=b;
+    Samp(j)=m;
     %%%% onset off
     fnd=0;
 for k=b-5:+1:b
@@ -212,7 +214,7 @@ Qrange=b-20:+1:b;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-SON(i,j)=qon1(1);
+SON(j)=qon1(1);
 fnd=0;
 for k=b:+1:b+20
     if((y1(k)<=0) && (y1(k-1)>0))
@@ -226,19 +228,19 @@ Qrange=b:+1:b+20;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-SOFF(i,j)=qon1(1);
+SOFF(j)=qon1(1);
     
     
    
     
     %% T Peak
-    a=Rloc(i,j)+25:Rloc(i,j)+100;
+    a=Rloc(j)+25:Rloc(j)+100;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
-    Tloc(i,j)=b;
-    Tamp(i,j)=m;
+    Tloc(j)=b;
+    Tamp(j)=m;
      %%%% onset off
     fnd=0;
 for k=b-20:+1:b
@@ -253,7 +255,7 @@ Qrange=b-20:+1:b;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-TON(j,i)=qon1(1);
+TON(j)=qon1(1);
 fnd=0;
 for k=b:+1:b+20
     if((y1(k)<=0) && (y1(k-1)>0))
@@ -267,16 +269,16 @@ Qrange=b:+1:b+20;
 qon1=find(y1(Qrange)==max(y1(Qrange)));
 qon1=Qrange(qon1);
 end
-TOFF(j,i)=qon1(1);   
+TOFF(j)=qon1(1);   
 
-    if(Tamp(i,j)<Pamp(i,j))
-        a=Rloc(i,j)+25:Rloc(i,j)+70;
+    if(Tamp(j)<Pamp(j))
+        a=Rloc(j)+25:Rloc(j)+70;
     m=min(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
-    Tloc(i,j)=b;
-    Tamp(i,j)=m;
+    Tloc(j)=b;
+    Tamp(j)=m;
     ELEVATED=[ELEVATED j];
     
     end
