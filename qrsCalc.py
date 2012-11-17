@@ -4,13 +4,17 @@ import csv
 
 rnum = 100
 
+rfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_r.csv",'rb'))
+pfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_p.csv",'rb'))
 qfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_q.csv",'rb'))
+sfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_s.csv",'rb'))
+tfile = csv.reader(open(str(rnum)+"/"+str(rnum)+"_t.csv",'rb'))
 
 diffs = []
 rownum = 0
 prevq = 0
 curq = 0
-for row in qfile:
+for row in rfile:
 	colnum = 0
 	for col in row:
 		#print col
@@ -18,10 +22,7 @@ for row in qfile:
 		if rownum > 0:
 			prevq = curq
 			#print col
-			try:
-				curq = float(col)
-			except:
-				curq = 0
+			curq = int(col)
 			diffs.append(int(curq-prevq))
 		else:
 			curq = float(col)
