@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import csv
+import sys
 
 # needed values from JBiSE:
 # PR (probably PQ; P to (R or Q))
@@ -8,7 +9,7 @@ import csv
 # QT (Q to T)
 # ST (S to T) - will require more work b/c uses diff endpoints from QT
 
-rnum = 100
+rnum = int(sys.argv[1])
 
 # this stuff is heart rate...
 '''diffs = []
@@ -95,22 +96,32 @@ if( not (len(ploc) == len(qloc)) and (len(qloc) == len(rloc)) and (len(rloc) == 
 qrslen = []
 for i in xrange(len(qloc)):
 	qrslen.append(sloc[i]-qloc[i])
-print qrslen
+#print qrslen
 
 # calculate QT
 qtlen = []
 for i in xrange(len(qloc)):
 	qtlen.append(tloc[i]-qloc[i])
-print qtlen
+#print qtlen
 
 # calculate ST
 stlen = []
 for i in xrange(len(qloc)):
 	stlen.append(tloc[i]-sloc[i])
-print stlen
+#print stlen
 
-'''print ploc
-print qloc
-print rloc
-print sloc
-print tloc'''
+# write segments to files
+with open(str(rnum)+"/"+str(rnum)+"_qrs.csv",'wb') as f:
+	qrswriter = csv.writer(f, dialect="excel")
+	for i in xrange(len(qrslen)):
+		qrswriter.writerow([qrslen[i]])
+
+with open(str(rnum)+"/"+str(rnum)+"_qt.csv",'wb') as f:
+	qtwriter = csv.writer(f, dialect="excel")
+	for i in xrange(len(qtlen)):
+		qtwriter.writerow([qtlen[i]])
+
+with open(str(rnum)+"/"+str(rnum)+"_st.csv",'wb') as f:
+	stwriter = csv.writer(f, dialect="excel")
+	for i in xrange(len(stlen)):
+		stwriter.writerow([stlen[i]])
