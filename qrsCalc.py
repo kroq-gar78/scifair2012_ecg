@@ -63,7 +63,7 @@ with open(str(rnum)+"/"+str(rnum)+"_r.csv",'rb') as f:
 		colnum = 0
 		for col in row:
 			if colnum != 0: continue
-			tloc.append(int(col))
+			rloc.append(int(col))
 			colnum += 1
 
 with open(str(rnum)+"/"+str(rnum)+"_s.csv",'rb') as f:
@@ -75,8 +75,8 @@ with open(str(rnum)+"/"+str(rnum)+"_s.csv",'rb') as f:
 			sloc.append(int(col))
 			colnum += 1
 
-with open(str(rnum)+"/"+str(rnum)+"_t.csv",'rb') as t:
-	tfile = csv.reader(t)
+with open(str(rnum)+"/"+str(rnum)+"_t.csv",'rb') as f:
+	tfile = csv.reader(f)
 	for row in tfile:
 		colnum = 0
 		for col in row:
