@@ -7,7 +7,7 @@ ELEVATED=[];
 %fname=strcat(path,fname);
 rnum = '100';
         load(strcat(rnum,'m.mat'));
-       val=val(1:1000);
+       %val=val(1:1500);
        z=zeros(100,1);
        
        A=val(1,:);
@@ -180,7 +180,7 @@ QOF(j)=qon1(1);
  %% P Peak
     try
         
-    a=Rloc(j)-100:Rloc(j)-50;
+    a=Qloc(j)-100:Qloc(j)-10;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
@@ -232,7 +232,7 @@ SOFF(j)=qon1(1);
    
     
     %% T Peak
-    a=Rloc(j)+25:Rloc(j)+100;
+    a=Sloc(j)+10:Sloc(j)+70;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
@@ -286,15 +286,15 @@ end
 %figure;
 %subplot(6,1,k);
     
-
+%{
 plot(y1), hold on;
 plot(Rloc,Ramp,'*'),hold on;
 plot(Qloc,Qamp,'+'),hold on;
 plot(Sloc,Samp,'+'),hold on;
 plot(Ploc,Pamp,'^'), hold on
-plot(Tloc,Tamp,'.')
+plot(Tloc,Tamp,'^')
 grid on;
-
+%}
 
 % Write points to files
 %{
@@ -308,11 +308,11 @@ end
 
 
 %fprintf(fopen(strcat(rnum,'_r.txt'),'w'),'%d,%d\n',[Rloc';Ramp]);
-%csvwrite(strcat(rnum,'_r.csv'),[Rloc',Ramp]);
-%csvwrite(strcat(rnum,'_p.csv'),[Ploc',Pamp']);
-%csvwrite(strcat(rnum,'_q.csv'),[Qloc',Qamp']);
-%csvwrite(strcat(rnum,'_s.csv'),[Sloc',Samp']);
-%csvwrite(strcat(rnum,'_t.csv'),[Tloc',Tamp']);
+csvwrite(strcat(rnum,'_r.csv'),[Rloc',Ramp]);
+csvwrite(strcat(rnum,'_p.csv'),[Ploc',Pamp']);
+csvwrite(strcat(rnum,'_q.csv'),[Qloc',Qamp']);
+csvwrite(strcat(rnum,'_s.csv'),[Sloc',Samp']);
+csvwrite(strcat(rnum,'_t.csv'),[Tloc',Tamp']);
 Rloc=Rloc';
 Ploc=Ploc';
 Pamp=Pamp';
