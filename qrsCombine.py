@@ -50,7 +50,7 @@ qrsavg = []
 qrsmax = []
 qrsmin = []
 for i in xrange(len(qrslist)):
-	qrsavg.append(sum(qrslist[i])/sum(qrslist[i]))
+	qrsavg.append(sum(qrslist[i])/len(qrslist[i]))
 	qrsmax.append(max(qrslist[i]))
 	qrsmin.append(min(qrslist[i]))
 
