@@ -55,9 +55,10 @@ for i in xrange(len(qrslist)):
 	qrsmin.append(min(qrslist[i]))
 
 # write all rates, avgs, maxs, mins to a single CSV
+# qrsnn = QRS neural network (as in input to neural network)
 with open('all_qrsnn.csv','wb') as f:
 	qrsnnWriter = csv.writer(f, dialect="excel")
 	for i in xrange(len(ecglist)):
 		rnum = ecglist[i]
 		#with open(str(rnum)+"/"+str(rnum)+"_qrsnn.csv",'wb') as f:
-		qrsnnWriter.writerow([rintv[i],qrsavg[i],qrsmax[i],qrsmin[i]])
+		qrsnnWriter.writerow([rnum,rintv[i],qrsavg[i],qrsmax[i],qrsmin[i]])
