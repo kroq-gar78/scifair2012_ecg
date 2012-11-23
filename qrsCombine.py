@@ -24,17 +24,11 @@ for rnum in ecglist:
 			tmplist.append(int(row[0]))
 		qrslist.append(tmplist)
 
-# calculate averages
+# calculate averages, maximums, and minimums
 qrsavg = []
-for i in xrange(len(qrslist)):
-	qrsavg.append(sum(qrslist[i])/sum(qrslist[i]))
-
-# calculate maximums
 qrsmax = []
-for i in xrange(len(qrslist)):
-	qrsmax.append(max(qrslist[i]))
-
-# calculate minimums
 qrsmin = []
 for i in xrange(len(qrslist)):
+	qrsavg.append(sum(qrslist[i])/sum(qrslist[i]))
+	qrsmax.append(max(qrslist[i]))
 	qrsmin.append(min(qrslist[i]))
