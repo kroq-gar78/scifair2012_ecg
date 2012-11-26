@@ -7,7 +7,7 @@ ELEVATED=[];
 %fname=strcat(path,fname);
 rnum = '210';
         load(strcat(rnum,'m.mat'));
-       val=val(1:15000);
+       %val=val(1:15000);
        z=zeros(100,1);
        samplingrate=360;
        A=val(1,:);
@@ -115,22 +115,19 @@ y1=A;
 
 
 for(j=1:1:length(Rloc))
+    %% Q  Detection
     startpt=Rloc(j)-100;
     if startpt<1
         startpt=1;
     end
-    a=startpt:Rloc(j)-10;
-    m=max(y1(a));
-    b=find(y1(a)==m);
-    b=b(1);
-    b=a(b);
-    %%% ONSET
-    fnd=0;
-startpt=b;
-if startpt<20
-    startpt=20;
-end
-    %% Q  Detection
+    endpt=Rloc(j)-10;
+    if endpt>length(A)
+        endpt=length(A);
+    end
+    if startpt>=endpt
+        killLastR = 1
+        break
+    end
     a=Rloc(j)-50:Rloc(j)-10;
     m=min(y1(a));
     b=find(y1(a)==m);
@@ -141,8 +138,20 @@ end
     %%%%% ONSET
 %% P Peak
     try
-        
-    a=Qloc(j)-100:Qloc(j)-10;
+    
+    startpt=Qloc(j)-100;
+    if startpt<1
+        startpt=1;
+    end
+    endpt=Qloc(j)-10;
+    if endpt>length(A)
+        endpt=length(A);
+    end
+    if startpt>=endpt
+        killLastR = 1
+        break
+    end
+    a=startpt:endpt;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
@@ -153,21 +162,71 @@ end
     end
 
     %% S  Detection
-    a=Rloc(j)+5:Rloc(j)+50;
+    
+    startpt=Rloc(j)+5;
+    if startpt<1
+        startpt=1;
+    end
+    endpt=Rloc(j)+50;
+    if endpt>length(A)
+        endpt=length(A);
+    end
+    if startpt>=endpt
+        killLastR = 1
+        break
+    end
+    a=startpt:endpt;
     m=min(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
     Sloc(j)=b;
     Samp(j)=m;
+    
     %% T Peak
-    a=Sloc(j)+10:Sloc(j)+70;
+    startpt=Sloc(j)+10;
+    if startpt<1
+        startpt=1;
+    end
+    endpt=Sloc(j)+70;
+    if endpt>length(A)
+        endpt=length(A);
+    end
+    if startpt>=endpt
+        killLastR = 1
+        break
+    end
+    a=startpt:endpt;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
     Tloc(j)=b;
     Tamp(j)=m;
+end
+
+% in the case that we need to kill the last R
+if killLastR
+    rlen = length(Rloc); % store to compare to others
+    Rloc(end) = [];
+    Ramp(end) = [];
+    % delete only if they've gotten to it
+    if length(Ploc) == rlen
+        Ploc(end) = [];
+        Pamp(end) = [];
+    end
+    if length(Qloc) == rlen
+        Qloc(end) = [];
+        Qamp(end) = [];
+    end
+    if length(Sloc) == rlen
+        Sloc(end) = [];
+        Samp(end) = [];
+    end
+    if length(Tloc) == rlen
+        Tloc(end) = [];
+        Tamp(end) = [];
+    end
 end
 %figure;
 %subplot(6,1,k);
