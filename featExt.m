@@ -5,7 +5,7 @@ close all;
 ELEVATED=[];
 %[fname path]=uigetfile('*.mat');
 %fname=strcat(path,fname);
-rnum = '210';
+rnum = '100';
         load(strcat(rnum,'m.mat'));
        %val=val(1:15000);
        z=zeros(100,1);
@@ -113,7 +113,7 @@ Ramp=A(Rloc);
 % Work from closest to R peak to farthest from R peak
 y1=A;
 
-
+killLastR = 0; % see near the end of the program to see what this does
 for(j=1:1:length(Rloc))
     %% Q  Detection
     startpt=Rloc(j)-100;
