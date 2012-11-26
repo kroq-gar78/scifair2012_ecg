@@ -2,6 +2,9 @@
 
 # Get the heart rate, average, maximum, and minimum QRS complex length
 
+# TODO: min/max of all intervals, PR interval, max of P (relation to S? or max/min of all peaks)
+# mas TODO: stdev of EVERYTHINGGG
+
 import csv
 import subprocess # for system commands
 #import os
@@ -54,6 +57,11 @@ for i in xrange(len(qrslist)):
 	qrsmax.append(max(qrslist[i]))
 	qrsmin.append(min(qrslist[i]))
 
+#for i in xrange(len(qrsavg)):
+#	if(qrsavg[i]/360.0>0.14):
+#		print ecglist[i]
+#		if
+
 # write all rates, avgs, maxs, mins to a single CSV
 # qrsnn = QRS neural network (as in input to neural network)
 with open('all_qrsnn.csv','wb') as f:
@@ -62,3 +70,10 @@ with open('all_qrsnn.csv','wb') as f:
 		rnum = ecglist[i]
 		#with open(str(rnum)+"/"+str(rnum)+"_qrsnn.csv",'wb') as f:
 		qrsnnWriter.writerow([rnum,rintv[i],qrsavg[i],qrsmax[i],qrsmin[i]])
+
+# write another file with everything in seconds (versus samples)
+with open('all_qrsnn_sec.csv','wb') as f:
+	qrsnnSecWriter = csv.writer(f, dialect="excel")
+	for i in xrange(len(ecglist)):
+		rnum = ecglist[i]
+		qrsnnSecWriter.writerow([rnum,rintv[i]/360.0,qrsavg[i]/360.0,qrsmax[i]/360.0,qrsmin[i]/360.0])
