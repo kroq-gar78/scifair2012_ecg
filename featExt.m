@@ -62,7 +62,7 @@ figure(4)
   %% DETECT R PEAK
 %% Calculate R in the actual Signal
 ecg=A;
-fresult=fft(y1);
+fresult=fft(A);
 fresult(1 : round(length(fresult)*5/samplingrate))=0;
 fresult(end - round(length(fresult)*5/samplingrate) : end)=0;
 corrected=real(ifft(fresult));
@@ -108,7 +108,7 @@ for data=1:1:length(peaks2)
     end
 end
 Rloc=find(peaks2);
-%Ramp=A(Rloc);
+Ramp=A(Rloc);
 %% After R Peak Tracking detect others
 % Work from closest to R peak to farthest from R peak
 y1=A;
