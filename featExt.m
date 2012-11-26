@@ -5,17 +5,18 @@ close all;
 ELEVATED=[];
 %[fname path]=uigetfile('*.mat');
 %fname=strcat(path,fname);
-rnum = '100';
+rnum = '210';
         load(strcat(rnum,'m.mat'));
-       %val=val(1:1500);
+       val=val(1:15000);
        z=zeros(100,1);
        samplingrate=360;
        A=val(1,:);
-       v1=val(1,:)-val(1,1);
+       %v1=val(1,:)-val(1,1);
+       v1=val(1,:);
        A=v1;
        A=A';
        zc=A(1);
-       A=[z;A;z];
+       %A=[z;A;z];
        
        
       %  s = A(1:1:400);
@@ -52,9 +53,6 @@ figure(2)
   
 
   
-  %% ZERO CROSSING REMOVAL%%%%%%
-  base_corrected=ca2;
-  y=base_corrected-zc;
   %{
 figure(4)
   plot(y),grid on
@@ -62,49 +60,13 @@ figure(4)
   %}
   
   %% DETECT R PEAK
-y1=y;
-m1=max(y1)*.40;
-P=find(y1>=m1);
-% it will give two two points ... remove one point each
-P1=P;
-last=P1(1);
-P2=[last];
-for(i=2:1:length(P1))
-    if(P1(i)>(last+10))
-        last=P1(i);
-        P2=[P2 last];
-    end
-end
-Rt=y1(P2);
-%{
-figure(5)
-plot(y1),grid on,hold on
-plot(P2,Rt,'*');
-%}
 %% Calculate R in the actual Signal
-P3=P2*4;
-Rloc=[];
-for( i=1:1:length(P3))
-    range= [P3(i)-20:P3(i)+20];
-    m=max(A(range));
-    l=find(A(range)==m);
-    pos=range(l);
-    Rloc=[Rloc pos];
-end
-Ramp=A(Rloc);
-%{
-figure(6)
-plot(A),grid on,hold on
-plot(Rloc,Ramp,'*');
-title('Detected R peak in actual Signal')
-%}
-
-%ecg=y1
-%fresult=fft(y1);
-%fresult(1 : round(length(fresult)*5/samplingrate))=0;
-%fresult(end - round(length(fresult)*5/samplingrate) : end)=0;
-%corrected=real(ifft(fresult));
-corrected=A;
+ecg=A;
+fresult=fft(y1);
+fresult(1 : round(length(fresult)*5/samplingrate))=0;
+fresult(end - round(length(fresult)*5/samplingrate) : end)=0;
+corrected=real(ifft(fresult));
+%corrected=A;
 %   Filter - first pass
 WinSize = floor(samplingrate * 571 / 1000);
 if rem(WinSize,2)==0
@@ -113,6 +75,7 @@ end
 filtered1=librow_winmax(corrected, WinSize);
 %   Scale ecg
 peaks1=filtered1/(max(filtered1)/7);
+%peaks1=filtered1;
 %   Filter by threshold filter
 for data = 1:1:length(peaks1)
     if peaks1(data) < 4
@@ -145,48 +108,28 @@ for data=1:1:length(peaks2)
     end
 end
 Rloc=find(peaks2);
-Ramp=A(Rloc);
+%Ramp=A(Rloc);
 %% After R Peak Tracking detect others
 % Work from closest to R peak to farthest from R peak
 y1=A;
 
 
 for(j=1:1:length(Rloc))
-    a=Rloc(j)-100:Rloc(j)-10;
+    startpt=Rloc(j)-100;
+    if startpt<1
+        startpt=1;
+    end
+    a=startpt:Rloc(j)-10;
     m=max(y1(a));
     b=find(y1(a)==m);
     b=b(1);
     b=a(b);
     %%% ONSET
     fnd=0;
-
-for k=b-20:+1:b
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
+startpt=b;
+if startpt<20
+    startpt=20;
 end
-if(fnd==0)
-Qrange=b-20:+1:b;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-RON(j)=qon1(1);
-fnd;
-for k=b:+1:b+20
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
-end
-if(fnd==0)
-Qrange=b:+1:b+20;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-ROF(j)=qon1(1);
     %% Q  Detection
     a=Rloc(j)-50:Rloc(j)-10;
     m=min(y1(a));
@@ -196,36 +139,7 @@ ROF(j)=qon1(1);
     Qloc(j)=b;
     Qamp(j)=m;
     %%%%% ONSET
-    fnd=0;
-for k=b-20:+1:b
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
-end
-if(fnd==0)
-Qrange=b-20:+1:b;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-QON(j)=qon1(1);
-fnd;
-for k=b:+1:b+20
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
-end
-if(fnd==0)
-Qrange=b:+1:b+20;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-QOF(j)=qon1(1);
-    
- %% P Peak
+%% P Peak
     try
         
     a=Qloc(j)-100:Qloc(j)-10;
@@ -246,39 +160,6 @@ QOF(j)=qon1(1);
     b=a(b);
     Sloc(j)=b;
     Samp(j)=m;
-    %%%% onset off
-    fnd=0;
-for k=b-5:+1:b
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
-end
-if(fnd==0)
-Qrange=b-20:+1:b;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-SON(j)=qon1(1);
-fnd=0;
-for k=b:+1:b+20
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
-end
-if(fnd==0)
-Qrange=b:+1:b+20;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-SOFF(j)=qon1(1);
-    
-    
-   
-    
     %% T Peak
     a=Sloc(j)+10:Sloc(j)+70;
     m=max(y1(a));
@@ -287,50 +168,7 @@ SOFF(j)=qon1(1);
     b=a(b);
     Tloc(j)=b;
     Tamp(j)=m;
-     %%%% onset off
-    fnd=0;
-for k=b-20:+1:b
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
 end
-if(fnd==0)
-Qrange=b-20:+1:b;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-TON(j)=qon1(1);
-fnd=0;
-for k=b:+1:b+20
-    if((y1(k)<=0) && (y1(k-1)>0))
-        qon1=k;
-        fnd=1;
-      break 
-  end
-end
-if(fnd==0)
-Qrange=b:+1:b+20;
-qon1=find(y1(Qrange)==max(y1(Qrange)));
-qon1=Qrange(qon1);
-end
-TOFF(j)=qon1(1);   
-
-    if(Tamp(j)<Pamp(j))
-        a=Rloc(j)+25:Rloc(j)+70;
-    m=min(y1(a));
-    b=find(y1(a)==m);
-    b=b(1);
-    b=a(b);
-    Tloc(j)=b;
-    Tamp(j)=m;
-    ELEVATED=[ELEVATED j];
-    
-    end
-    %% END OF T
-end
-%end
 %figure;
 %subplot(6,1,k);
     
@@ -375,33 +213,3 @@ save(strcat(rnum,'_p.mat'),'Ploc','Pamp');
 save(strcat(rnum,'_q.mat'),'Qloc','Qamp');
 save(strcat(rnum,'_s.mat'),'Sloc','Samp');
 save(strcat(rnum,'_t.mat'),'Tloc','Tamp');
-
-%clc;
-flag=0;
-if(length(ELEVATED)>ceil(.8*length(Rloc)))
-    disp('T inverted (MI Detected) with T inverted Logic')
-    return;
-else
-    
-    flag=1;
-end
-
-%% CASE OF ST SEGMENT ELEVATION
-x=A;
-TOFF=TOFF';
-TON=TON';
-for(i=1:1:1)
-   
- for(j=1:1:length(Rloc(i,:))   )
-PRpoint(i,j)= ceil(Rloc(i,j)-(SOFF(i,j)-QON(i,j))/2);
-STpoint(i,j)=ceil(Tloc(i,j)-(TOFF(i,j)-TON(i,j))/2);
-STDeviation(i,j)=abs(x(PRpoint(i,j),i)-x(STpoint(i,j),i));
- end
-end
-x=STDeviation/100;
-x=mean(x);
-if(x>1)
-    disp('MI Detected')
-else
-    disp('Normal Signal')
-end
