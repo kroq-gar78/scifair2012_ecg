@@ -9,7 +9,7 @@ rnum = '100';
         load(strcat(rnum,'m.mat'));
        %val=val(1:1500);
        z=zeros(100,1);
-       
+       samplingrate=360;
        A=val(1,:);
        v1=val(1,:)-val(1,1);
        A=v1;
@@ -98,7 +98,55 @@ plot(A),grid on,hold on
 plot(Rloc,Ramp,'*');
 title('Detected R peak in actual Signal')
 %}
-%% After R Peak Tracking ... detect others
+
+%ecg=y1
+%fresult=fft(y1);
+%fresult(1 : round(length(fresult)*5/samplingrate))=0;
+%fresult(end - round(length(fresult)*5/samplingrate) : end)=0;
+%corrected=real(ifft(fresult));
+corrected=A;
+%   Filter - first pass
+WinSize = floor(samplingrate * 571 / 1000);
+if rem(WinSize,2)==0
+    WinSize = WinSize+1;
+end
+filtered1=librow_winmax(corrected, WinSize);
+%   Scale ecg
+peaks1=filtered1/(max(filtered1)/7);
+%   Filter by threshold filter
+for data = 1:1:length(peaks1)
+    if peaks1(data) < 4
+        peaks1(data) = 0;
+    else
+        peaks1(data)=1;
+    end
+end
+positions=find(peaks1);
+distance=positions(2)-positions(1);
+for data=1:1:length(positions)-1
+    if positions(data+1)-positions(data)<distance
+        distance=positions(data+1)-positions(data);
+    end
+end
+% Optimize filter window size
+QRdistance=floor(0.04*samplingrate);
+if rem(QRdistance,2)==0
+    QRdistance=QRdistance+1;
+end
+WinSize=2*distance-QRdistance;
+% Filter - second pass
+filtered2=librow_winmax(corrected, WinSize);
+peaks2=filtered2;
+for data=1:1:length(peaks2)
+    if peaks2(data)<4
+        peaks2(data)=0;
+    else
+        peaks2(data)=1;
+    end
+end
+Rloc=find(peaks2);
+Ramp=A(Rloc);
+%% After R Peak Tracking detect others
 % Work from closest to R peak to farthest from R peak
 y1=A;
 
