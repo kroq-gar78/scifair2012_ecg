@@ -128,7 +128,7 @@ for(j=1:1:length(Rloc))
         killLastR = 1
         break
     end
-    a=Rloc(j)-50:Rloc(j)-10;
+    a=startpt:endpt;
     m=min(y1(a));
     b=find(y1(a)==m);
     b=b(1);
