@@ -220,16 +220,20 @@ end
 
 % delete all values marked for deletion
 for(j=rvalsToKill)
-    rvalsToKill(j) = [];
+    Rloc(j) = [];
+    Ramp(j) = [];
 end
 for(j=qvalsToKill)
-    qvalsToKill(j) = [];
+    Qloc(j) = [];
+    Qamp(j) = [];
 end
 for(j=pvalsToKill)
-    pvalsToKill(j) = [];
+    Ploc(j) = [];
+    Pamp(j) = [];
 end
 for(j=svalsToKill)
-    svalsToKill(j) = [];
+    Sloc(j) = [];
+    Samp(j) = [];
 end
 
 %figure;
