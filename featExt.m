@@ -5,7 +5,7 @@ close all;
 ELEVATED=[];
 %[fname path]=uigetfile('*.mat');
 %fname=strcat(path,fname);
-rnum = '100';
+rnum = '104';
         load(strcat(rnum,'m.mat'));
        %val=val(1:15000);
        z=zeros(100,1);
@@ -113,7 +113,11 @@ Ramp=A(Rloc);
 % Work from closest to R peak to farthest from R peak
 y1=A;
 
-killLastR = 0; % see near the end of the program to see what this does
+%killLastR = 0; % see near the end of the program to see what this does
+rvalsToKill = [];
+qvalsToKill = [];
+pvalsToKill = [];
+svalsToKill = [];
 for(j=1:1:length(Rloc))
     %% Q  Detection
     startpt=Rloc(j)-100;
@@ -125,8 +129,8 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
-        killLastR = 1
-        break
+        rvalsToKill = [rvalsToKill;j]
+        continue
     end
     a=startpt:endpt;
     m=min(y1(a));
@@ -135,7 +139,6 @@ for(j=1:1:length(Rloc))
     b=a(b);
     Qloc(j)=b;
     Qamp(j)=m;
-    %%%%% ONSET
 %% P Peak
     try
     
@@ -148,8 +151,9 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
-        killLastR = 1
-        break
+        rvalsToKill = [rvalsToKill;j]
+        qvalsToKill = [qvalsToKill;j];
+        continue
     end
     a=startpt:endpt;
     m=max(y1(a));
@@ -172,8 +176,10 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
-        killLastR = 1
-        break
+        rvalsToKill = [rvalsToKill;j]
+        qvalsToKill = [qvalsToKill;j];
+        pvalsToKill = [pvalsToKill;j];
+        continue
     end
     a=startpt:endpt;
     m=min(y1(a));
@@ -193,8 +199,11 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
-        killLastR = 1
-        break
+        rvalsToKill = [rvalsToKill;j]
+        qvalsToKill = [qvalsToKill;j];
+        pvalsToKill = [pvalsToKill;j];
+        svalsToKill = [svalsToKill;j];
+        continue
     end
     a=startpt:endpt;
     m=max(y1(a));
@@ -205,7 +214,22 @@ for(j=1:1:length(Rloc))
     Tamp(j)=m;
 end
 
+% delete all values marked for deletion
+for(j=rvalsToKill)
+    rvalsToKill(j) = [];
+end
+for(j=qvalsToKill)
+    qvalsToKill(j) = [];
+end
+for(j=pvalsToKill)
+    pvalsToKill(j) = [];
+end
+for(j=svalsToKill)
+    svalsToKill(j) = [];
+end
+
 % in the case that we need to kill the last R
+%{
 if killLastR
     rlen = length(Rloc); % store to compare to others
     Rloc(end) = [];
@@ -228,6 +252,7 @@ if killLastR
         Tamp(end) = [];
     end
 end
+%}
 %figure;
 %subplot(6,1,k);
     
