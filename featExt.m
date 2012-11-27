@@ -113,7 +113,7 @@ Ramp=A(Rloc);
 % Work from closest to R peak to farthest from R peak
 y1=A;
 
-% mark indeces for removal due to them being too close to the start/end
+% matrices to mark indeces for removal due to them being too close to the start/end
 rvalsToKill = [];
 qvalsToKill = [];
 pvalsToKill = [];
@@ -129,6 +129,7 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
+        % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
         continue
     end
@@ -151,6 +152,7 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
+        % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
         qvalsToKill = [qvalsToKill;j];
         continue
@@ -176,6 +178,7 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
+        % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
         qvalsToKill = [qvalsToKill;j];
         pvalsToKill = [pvalsToKill;j];
@@ -199,6 +202,7 @@ for(j=1:1:length(Rloc))
         endpt=length(A);
     end
     if startpt>=endpt
+        % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
         qvalsToKill = [qvalsToKill;j];
         pvalsToKill = [pvalsToKill;j];
