@@ -52,7 +52,7 @@ for demo = 1:1:1
     if rem(WinSize,2)==0
         WinSize = WinSize+1;
     end
-    filtered1=ecgdemowinmax(corrected, WinSize);
+    filtered1=librow_winmax(corrected, WinSize);
     %   Scale ecg
     peaks1=filtered1/(max(filtered1)/7);
     %   Filter by threshold filter
@@ -77,7 +77,7 @@ for demo = 1:1:1
     end
     WinSize=2*distance-QRdistance;
     % Filter - second pass
-    filtered2=ecgdemowinmax(corrected, WinSize);
+    filtered2=librow_winmax(corrected, WinSize);
     peaks2=filtered2;
     for data=1:1:length(peaks2)
         if peaks2(data)<4
