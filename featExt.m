@@ -113,7 +113,7 @@ Ramp=A(Rloc);
 % Work from closest to R peak to farthest from R peak
 y1=A;
 
-%killLastR = 0; % see near the end of the program to see what this does
+% mark indeces for removal due to them being too close to the start/end
 rvalsToKill = [];
 qvalsToKill = [];
 pvalsToKill = [];
@@ -228,31 +228,6 @@ for(j=svalsToKill)
     svalsToKill(j) = [];
 end
 
-% in the case that we need to kill the last R
-%{
-if killLastR
-    rlen = length(Rloc); % store to compare to others
-    Rloc(end) = [];
-    Ramp(end) = [];
-    % delete only if they've gotten to it
-    if length(Ploc) == rlen
-        Ploc(end) = [];
-        Pamp(end) = [];
-    end
-    if length(Qloc) == rlen
-        Qloc(end) = [];
-        Qamp(end) = [];
-    end
-    if length(Sloc) == rlen
-        Sloc(end) = [];
-        Samp(end) = [];
-    end
-    if length(Tloc) == rlen
-        Tloc(end) = [];
-        Tamp(end) = [];
-    end
-end
-%}
 %figure;
 %subplot(6,1,k);
     
