@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ls ./*.csv | grep -e "[0-9][0-9][0-9]" | sed 's/\.\///g'
+ls ./*.csv | grep -e "[0-9]{3}_[pqrst]\.csv" | sed 's/\.\///g'
