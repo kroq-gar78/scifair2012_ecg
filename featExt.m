@@ -228,14 +228,22 @@ end
 for(j=rvalsToKill)
     Rloc(j) = [];
     Ramp(j) = [];
-    Qloc(j) = [];
-    Qamp(j) = [];
-    Ploc(j) = [];
-    Pamp(j) = [];
-    Sloc(j) = [];
-    Samp(j) = [];
-    Tloc(j) = [];
-    Tamp(j) = [];
+    if(j<=length(Qloc))
+        Qloc(j) = [];
+        Qamp(j) = [];
+    end
+    if(j<=length(Ploc))
+        Ploc(j) = [];
+        Pamp(j) = [];
+    end
+    if(j<=length(Sloc))
+        Sloc(j) = [];
+        Samp(j) = [];
+    end
+    if(j<=length(Tloc))
+        Tloc(j) = [];
+        Tamp(j) = [];
+    end
 end
 
 %figure;
