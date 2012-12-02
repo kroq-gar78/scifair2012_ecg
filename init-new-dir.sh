@@ -10,7 +10,7 @@ for i in `find ../ -maxdepth 1 -name '*.mat'|grep -e "[0-9][0-9][0-9]m\.mat"|sed
 done
 
 # symlink all other scripts/programs except "featExt.m"
-for i in mk-ecg-dirs.sh mat-mv-to-dirs.sh mat2csv.py qrsCalc.py qrsCombine.py featext-automated.sh featext-matlab-cli.sh csv-list.sh csv-mv-to-dirs.sh; do
+for i in mk-ecg-dirs.sh mat-mv-to-dirs.sh mat2csv.py qrsCalc.py qrsCombine.py featext-automated.sh featext-matlab-cli.sh csv-list.sh csv-mv-to-dirs.sh librow_winmax.m; do
     ln -s ../$i .
 done
 
