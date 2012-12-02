@@ -80,12 +80,12 @@ window = 15;
 h = ones(window,1)/window;
 corrected = filter(h, 1, A);
 %}
-
+%{
 % lowpass Butterworth filter
 fNorm = 25 / (samplingrate/2);               %# normalized cutoff frequency
 [b,a] = butter(10, fNorm, 'low');  %# 10th order filter
 corrected = filtfilt(b, a, A);
-
+%}
 %   Filter - first pass
 WinSize = floor(samplingrate * 571 / 1000);
 if rem(WinSize,2)==0
