@@ -15,6 +15,14 @@ y = sgolayfilt(x, degree, frame);
 subplot(912), plot(y), set(gca, 'YLim', [-1 1], 'xtick',[])
 title('sgolayfilt')
 
+%# smooth
+window = 30;
+%#y = smooth(x, window, 'moving');
+%#y = smooth(x, window/length(x), 'sgolay', 2);
+y = smooth(x, window/length(x), 'rloess');
+subplot(913), plot(y), set(gca, 'YLim', [-1 1], 'xtick',[])
+title('smooth')
+
 %# moving average filter
 window = 15;
 h = ones(window,1)/window;
