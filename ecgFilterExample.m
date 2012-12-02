@@ -1,3 +1,5 @@
+% FROM http://stackoverflow.com/questions/1773542/matlab-filter-noisy-ekg-signal
+
 %# load ecg: simulate noisy ECG
 Fs=500;
 x = repmat(ecg(Fs), 1, 8);
