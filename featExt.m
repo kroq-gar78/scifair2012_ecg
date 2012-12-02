@@ -29,9 +29,9 @@ figure(1)
         title('Actual Signal'),grid on
         %}
 
-  [c,l]=wavedec(s,4,'db4');
+  %[c,l]=wavedec(s,4,'db4');
   %ca1=appcoef(c,l,'db4',1);
-  ca2=appcoef(c,l,'db4',2);
+  %ca2=appcoef(c,l,'db4',2);
   %ca3=appcoef(c,l,'db4',3);
   %ca4=appcoef(c,l,'db4',4);
   
@@ -80,6 +80,12 @@ window = 15;
 h = ones(window,1)/window;
 corrected = filter(h, 1, A);
 %}
+
+% lowpass Butterworth filter
+fNorm = 25 / (samplingrate/2);               %# normalized cutoff frequency
+[b,a] = butter(10, fNorm, 'low');  %# 10th order filter
+corrected = filtfilt(b, a, A);
+
 %   Filter - first pass
 WinSize = floor(samplingrate * 571 / 1000);
 if rem(WinSize,2)==0
