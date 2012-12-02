@@ -62,11 +62,18 @@ figure(4)
   %% DETECT R PEAK
 %% Calculate R in the actual Signal
 ecg=A;
+
+% no filter
+A=A-1024;
+corrected=A;
+
+%{
+% FFTW filter
 fresult=fft(A);
 fresult(1 : round(length(fresult)*5/samplingrate))=0;
 fresult(end - round(length(fresult)*5/samplingrate) : end)=0;
 corrected=real(ifft(fresult));
-%corrected=A;
+%}
 %   Filter - first pass
 WinSize = floor(samplingrate * 571 / 1000);
 if rem(WinSize,2)==0
