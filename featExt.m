@@ -5,7 +5,7 @@ close all;
 ELEVATED=[];
 %[fname path]=uigetfile('*.mat');
 %fname=strcat(path,fname);
-rnum = '100';
+rnum = '104';
         load(strcat(rnum,'m.mat'));
        %val=val(1:15000);
        z=zeros(100,1);
@@ -130,13 +130,10 @@ Rloc=find(peaks2);
 Ramp=A(Rloc);
 %% After R Peak Tracking detect others
 % Work from closest to R peak to farthest from R peak
-y1=A;
+y1=corrected;
 
 % matrices to mark indeces for removal due to them being too close to the start/end
 rvalsToKill = [];
-qvalsToKill = [];
-pvalsToKill = [];
-svalsToKill = [];
 for(j=1:1:length(Rloc))
     %% Q  Detection
     startpt=Rloc(j)-100;
@@ -158,10 +155,8 @@ for(j=1:1:length(Rloc))
     b=b(1);
     b=a(b);
     Qloc(j)=b;
-    Qamp(j)=m;
+    Qamp(j)=val(1,b)-1024;
 %% P Peak
-    try
-    
     startpt=Qloc(j)-100;
     if startpt<1
         startpt=1;
@@ -173,7 +168,6 @@ for(j=1:1:length(Rloc))
     if startpt>=endpt
         % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
-        qvalsToKill = [qvalsToKill;j];
         continue
     end
     a=startpt:endpt;
@@ -182,9 +176,7 @@ for(j=1:1:length(Rloc))
     b=b(1);
     b=a(b);
     Ploc(j)=b;
-    Pamp(j)=m;
-        
-    end
+    Pamp(j)=val(1,b)-1024;
 
     %% S  Detection
     
@@ -199,8 +191,6 @@ for(j=1:1:length(Rloc))
     if startpt>=endpt
         % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
-        qvalsToKill = [qvalsToKill;j];
-        pvalsToKill = [pvalsToKill;j];
         continue
     end
     a=startpt:endpt;
@@ -209,7 +199,7 @@ for(j=1:1:length(Rloc))
     b=b(1);
     b=a(b);
     Sloc(j)=b;
-    Samp(j)=m;
+    Samp(j)=val(1,b)-1024;
     
     %% T Peak
     startpt=Sloc(j)+10;
@@ -223,9 +213,6 @@ for(j=1:1:length(Rloc))
     if startpt>=endpt
         % mark indeces to kill because the feature's range is bad
         rvalsToKill = [rvalsToKill;j]
-        qvalsToKill = [qvalsToKill;j];
-        pvalsToKill = [pvalsToKill;j];
-        svalsToKill = [svalsToKill;j];
         continue
     end
     a=startpt:endpt;
@@ -234,25 +221,21 @@ for(j=1:1:length(Rloc))
     b=b(1);
     b=a(b);
     Tloc(j)=b;
-    Tamp(j)=m;
+    Tamp(j)=val(1,b)-1024;
 end
 
 % delete all values marked for deletion
 for(j=rvalsToKill)
     Rloc(j) = [];
     Ramp(j) = [];
-end
-for(j=qvalsToKill)
     Qloc(j) = [];
     Qamp(j) = [];
-end
-for(j=pvalsToKill)
     Ploc(j) = [];
     Pamp(j) = [];
-end
-for(j=svalsToKill)
     Sloc(j) = [];
     Samp(j) = [];
+    Tloc(j) = [];
+    Tamp(j) = [];
 end
 
 %figure;
