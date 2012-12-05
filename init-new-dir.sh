@@ -9,6 +9,11 @@ for i in `find ../ -maxdepth 1 -name '*.mat'|grep -e "[0-9][0-9][0-9]m\.mat"|sed
     ln -s ../$i$strend .
 done
 
+# symlink all CSV's
+for i in `find ../ -maxdepth 1 -name '*.csv'|egrep "[0-9]{3}\.csv"`; do
+    ln -s $i .
+done
+
 # symlink all other scripts/programs except "featExt.m"
 for i in mk-ecg-dirs.sh mat-mv-to-dirs.sh mat2csv.py qrsCalc.py qrsCombine.py featext-automated.sh featext-matlab-cli.sh csv-list.sh csv-mv-to-dirs.sh librow_winmax.m find-ecg-dirs.sh find-ecgs.sh mat2csv.sh qrsCalc.sh do-everything.sh; do
     ln -s ../$i .
