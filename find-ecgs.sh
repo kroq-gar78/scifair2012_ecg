@@ -1,4 +1,4 @@
 #!/bin/bash
-for i in `find . -maxdepth 1 -name '*.mat'|grep -e "[0-9][0-9][0-9]m\.mat"|sed 's/m\.mat//g'|sed 's/\.\///g'|sort`; do
+for i in `find . -maxdepth 1 -name '*.csv'|grep -e "[0-9][0-9][0-9]\.csv"|sed 's/\.csv//g'|sed 's/\.\///g'|sort`; do
 	echo $i
 done
