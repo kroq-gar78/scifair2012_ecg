@@ -94,7 +94,7 @@ with open('all_qrsnn.csv','wb') as f:
 	for i in xrange(len(ecglist)):
 		rnum = ecglist[i]
 		#with open(str(rnum)+"/"+str(rnum)+"_qrsnn.csv",'wb') as f:
-		qrsnnWriter.writerow([rnum,rintvavg[i],rintvstdev[i],rintvmax[i],rintvmin[i],qrsavg[i],qrsstdev[i],qrsmax[i],qrsmin[i]])
+		qrsnnWriter.writerow([rnum,len(rintvlist),rintvavg[i],rintvstdev[i],rintvmax[i],rintvmin[i],qrsavg[i],qrsstdev[i],qrsmax[i],qrsmin[i]])
 		'''rowdata = [rnum]
 		rowdata.append(min(rintv))
 		rowdata.append(max(rintv))
@@ -110,4 +110,4 @@ with open('all_qrsnn_sec.csv','wb') as f:
 	qrsnnSecWriter = csv.writer(f, dialect="excel")
 	for i in xrange(len(ecglist)):
 		rnum = ecglist[i]
-		qrsnnSecWriter.writerow([rnum,rintvavg[i]/360.0,rintvstdev[i]/360.0,rintvmax[i]/360.0,rintvmin[i]/360.0,qrsavg[i]/360.0,qrsstdev[i]/360.0,qrsmax[i]/360.0,qrsmin[i]/360.0])
+		qrsnnSecWriter.writerow([rnum,len(rintvlist),rintvavg[i]/360.0,rintvstdev[i]/360.0,rintvmax[i]/360.0,rintvmin[i]/360.0,qrsavg[i]/360.0,qrsstdev[i]/360.0,qrsmax[i]/360.0,qrsmin[i]/360.0])
