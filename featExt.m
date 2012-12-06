@@ -226,7 +226,7 @@ for(j=1:1:length(Rloc))
 end
 
 % delete all values marked for deletion
-for(j=rvalsToKill)
+for(j=fliplr(rvalsToKill'))
     Rloc(j) = [];
     Ramp(j) = [];
     if(j<=length(Qloc))
