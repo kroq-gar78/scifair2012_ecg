@@ -104,10 +104,10 @@ with open('all_qrsnn.csv','wb') as f:
 			rowdata.append(sum(qrs[j])/len(qrs[j]))
 		qrsnnWriter.writerow(rowdata)'''
 		
-
+sampfreq=128.0 # the sampling frequency in Hz
 # write another file with everything in seconds (versus samples)
 with open('all_qrsnn_sec.csv','wb') as f:
 	qrsnnSecWriter = csv.writer(f, dialect="excel")
 	for i in xrange(len(ecglist)):
 		rnum = ecglist[i]
-		qrsnnSecWriter.writerow([rnum,len(rintvlist[i]),rintvavg[i]/360.0,rintvstdev[i]/360.0,rintvmax[i]/360.0,rintvmin[i]/360.0,qrsavg[i]/360.0,qrsstdev[i]/360.0,qrsmax[i]/360.0,qrsmin[i]/360.0])
+		qrsnnSecWriter.writerow([rnum,len(rintvlist[i]),rintvavg[i]/sampfreq,rintvstdev[i]/sampfreq,rintvmax[i]/sampfreq,rintvmin[i]/sampfreq,qrsavg[i]/sampfreq,qrsstdev[i]/sampfreq,qrsmax[i]/sampfreq,qrsmin[i]/sampfreq])
